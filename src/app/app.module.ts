@@ -9,7 +9,8 @@ import { ContactsComponent } from './contacts/contacts.component';
 import { ContactComponent } from './contacts/contact/contact.component';
 import { MaterialModule } from './material/material.module';
 import { ContactService } from './shared/contact.service';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule,FormsModule } from '@angular/forms';
+import { ContactListComponent } from './contacts/contact-list/contact-list.component';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppComponent,
     ContactsComponent,
     ContactComponent,
+    ContactListComponent,
  
   ],
   imports: [
@@ -25,10 +27,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     MaterialModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,FormsModule
 
   ],
   providers: [ContactService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[ContactComponent]
 })
 export class AppModule { }

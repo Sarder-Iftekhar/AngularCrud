@@ -14,8 +14,17 @@ export class NotificationService {
     verticalPosition:'top'
   }
 
-  success(msg:any){
+  success_old(msg:any){
     this.config['panelClass']=['notification','success'];
     this.snackBar.open(msg,'this.config');
+  }
+
+  success(msg: string, duration = 3000): void {
+    this.snackBar.open(msg, '', {
+      duration: duration,
+      verticalPosition: 'top',
+      horizontalPosition: 'right',
+      panelClass: ['snackbar-container', 'success'],
+    });
   }
 }

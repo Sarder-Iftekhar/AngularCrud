@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { FormGroup,FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Contact } from '../classes/contact';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,13 @@ export class ContactService {
 
     });
   }
+   contact!:Contact[];
+  populateForm(contact:any){
+    //this.form.setValue(contact)
+
+
+
+  }
 
   saveContact(data:any):Observable<any>
   {
@@ -45,5 +53,34 @@ export class ContactService {
     
 
   }
+
+ url='http://localhost:5001/api/Contact/GetAllContact'
+  getContacts():Observable<any>
+  { 
+     //return this.httpClient.get(`/api/Contact/GetAllContact`);
+
+     return this.httpClient.get(this.url);
+  }
+
+
+  //for checking
+    getContactByParameter(contactID:string):Observable<any>
+  {
+    //passed parameter employeeID:string                 //error:3
+    //get by using doller sign ----  ${employeeID}
+    //like this change param name in backend controller in getEmployeeBy parameter function also
+     return this.httpClient.get(`/api/Employee/GetContactById/id/${contactID}`);
+     //return this.httpClient.get(this.url1);
+
+
+  }
+
+
+  
+
+
+
+
+
 
 }
