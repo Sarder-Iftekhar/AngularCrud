@@ -26,5 +26,13 @@ export class NotificationService {
       horizontalPosition: 'right',
       panelClass: ['snackbar-container', 'success'],
     });
+    
+  }
+
+
+
+  warn(msg:any) {
+    this.config['panelClass'] = ['notification', 'warn'];
+    this.snackBar.open(msg, '', this.config);
   }
 }

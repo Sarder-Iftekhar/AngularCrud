@@ -4,6 +4,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog,MatDialogConfig } from '@angular/material/dialog';
 import { ContactComponent } from '../contact/contact.component';
+import { NotificationService } from 'src/app/shared/notification.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-contact-list',
@@ -13,7 +15,10 @@ import { ContactComponent } from '../contact/contact.component';
 export class ContactListComponent implements OnInit {
   //listGet:any;
  
-  constructor(public contactService:ContactService,private dialog:MatDialog) { }
+  constructor(public contactService:ContactService,
+              private dialog:MatDialog, 
+              private router: Router,
+              public notificationService:NotificationService) { }
 
   ngOnInit(): void {
 
@@ -72,44 +77,38 @@ export class ContactListComponent implements OnInit {
     dialogConfig.autoFocus=true;
     dialogConfig.width="60%";
    this.dialog.open(ContactComponent,dialogConfig)
-
   }
 
 //edit not working
   onEdit(row:any)
-  {
-    this.contactService.getContactByParameter(row);
+  {    
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose=true;
+    dialogConfig.disableClose=false; //true
     dialogConfig.autoFocus=true;
     dialogConfig.width="60%";
-   this.dialog.open(ContactComponent,dialogConfig)
+    dialogConfig.data=row.contactId;
+    let dialogRef = this.dialog.open(ContactComponent,dialogConfig)
 
-
+    dialogRef.afterClosed().subscribe(confirm=>{
+      if (confirm) {
+        this.getAllContacts();
+      }     
+    })
   }
 
-  // ngAfterViewInit() {
-  //   this.dataSource.paginator = this.paginator;
-  //   this.dataSource.sort = this.sort;
-  // }
- 
-  // getAllContacts(){
-  //   this.contactService.getContacts().subscribe
-  //   ( 
-  //     data=>
-  //     {
-        
-  //       let array =data.map((item=>{
-  //         return{
-  //           $contactID:item.key,
-  //           ...item.payload.val()
-  //         };
-  //       });
-  //       this.listGet=data;
-  //       this.listGet.sort=this.sort
-        
-  //     }
-  //   )
-  // }
 
+  onDelete(row:any){
+    if(confirm('Are you sure to delete this record ?')){
+      this.contactService.deleteContact(row.contactId).subscribe(
+        data=>{
+          this.getAllContacts();
+        }
+
+      );
+      this.notificationService.warn('! Deleted successfully');
+    }
+  };
+  //test
+ 
+  
 }

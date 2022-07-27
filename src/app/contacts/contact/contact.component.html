@@ -1,8 +1,13 @@
-<form [formGroup]="service.form" #usersForm="ngForm" class="normal-form" (ngSubmit)="getUserFormData()">
+<mat-toolbar>
+    <span>{{contactService.form.controls['contactId'].value?"Modify Employee":"New Employee"}}</span>
+    <span class="fill-remaining-space"></span>
+    <button class="btn-dialog-close" mat-stroked-button (click)="onClose(false)" tabIndex="-1"><mat-icon>clear</mat-icon></button>
+</mat-toolbar>
+<form [formGroup]="contactService.form" #usersForm="ngForm" class="normal-form" (ngSubmit)="getUserFormData()">
     <mat-grid-list cols="2" rowHeight="500px" >
         <mat-grid-tile>
             <div class="controles-container">
-                <input type="hidden" formControlName="$contactID">
+                <input type="hidden" formControlName="contactId">
                 <mat-form-field>
                     <input formControlName="firstName" matInput placeholder="First Name">
                 </mat-form-field>

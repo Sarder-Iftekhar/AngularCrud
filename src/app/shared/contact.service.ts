@@ -14,7 +14,7 @@ export class ContactService {
   constructor(private httpClient:HttpClient) { }
   //form group property
   form:FormGroup=new FormGroup({
-    $contactID:new FormControl(null),
+    contactId:new FormControl(null),
     firstName:new FormControl(''),
     middleName:new FormControl(''),
     lastName:new FormControl(''),
@@ -26,7 +26,7 @@ export class ContactService {
   initializeFormGroup()
   {
     this.form.setValue({
-      $contactID:null,
+      contactId:null,
       firstName:'',
       middleName:'',
       LastName:'',
@@ -35,24 +35,24 @@ export class ContactService {
 
     });
   }
-   contact!:Contact[];
+  contact: any = [];//Contact[];
   populateForm(contact:any){
     //this.form.setValue(contact)
-
-
-
   }
+  
+  // deleteEmployee(contactID: string, index: number) {
+  //   this.contact.splice(index,1);
+  //   //api
+  // }
 
   saveContact(data:any):Observable<any>
   {
-    //return this.httpClient.post(`/api/Employee/SaveEmployees`,data);
-    //http://localhost:14251/api/Employee/SaveEmployees
-    //http://localhost:5001/api/Contact/SaveContact
-   
-    return this.httpClient.post("http://localhost:5001/api/Contact/SaveContact",data);
     
+    return this.httpClient.post("http://localhost:5001/api/Contact/SaveContact",data);
 
   }
+
+
 
  url='http://localhost:5001/api/Contact/GetAllContact'
   getContacts():Observable<any>
@@ -64,15 +64,19 @@ export class ContactService {
 
 
   //for checking
-    getContactByParameter(contactID:string):Observable<any>
+    getContactByParameter(contactId:number):Observable<any>
   {
     //passed parameter employeeID:string                 //error:3
     //get by using doller sign ----  ${employeeID}
     //like this change param name in backend controller in getEmployeeBy parameter function also
-     return this.httpClient.get(`/api/Employee/GetContactById/id/${contactID}`);
+     return this.httpClient.get(`http://localhost:5001/api/Contact/GetContactById/${contactId}`);
      //return this.httpClient.get(this.url1);
-
-
+  }
+  deleteContact(contactId:any)
+  {
+    
+    
+    return this.httpClient.delete(`http://localhost:5001/api/Contact/DeleteContact/`+contactId);
   }
 
 
