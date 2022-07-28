@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 //for reactive form approach we have to import
-import { FormGroup,FormControl } from '@angular/forms';
+import { FormGroup,FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Contact } from '../classes/contact';
@@ -14,19 +14,15 @@ export class ContactService {
   constructor(private httpClient:HttpClient) { }
   //form group property
   form:FormGroup=new FormGroup({
-    contactId:new FormControl(null),
-    firstName:new FormControl(''),
+    firstName:new FormControl('',Validators.required),
     middleName:new FormControl(''),
     lastName:new FormControl(''),
-    email:new FormControl(''),
-    phone:new FormControl('')
+    email:new FormControl('',Validators.required),
+    phone:new FormControl('', [Validators.required, Validators.minLength(11)])
   })
-
-
   initializeFormGroup()
   {
     this.form.setValue({
-      contactId:null,
       firstName:'',
       middleName:'',
       LastName:'',
@@ -39,19 +35,14 @@ export class ContactService {
   populateForm(contact:any){
     //this.form.setValue(contact)
   }
-  
   // deleteEmployee(contactID: string, index: number) {
   //   this.contact.splice(index,1);
   //   //api
   // }
-
-  saveContact(data:any):Observable<any>
+  saveContact(data:string):Observable<any>
   {
-    
     return this.httpClient.post("http://localhost:5001/api/Contact/SaveContact",data);
-
   }
-
 
 
  url='http://localhost:5001/api/Contact/GetAllContact'
@@ -61,8 +52,6 @@ export class ContactService {
 
      return this.httpClient.get(this.url);
   }
-
-
   //for checking
     getContactByParameter(contactId:number):Observable<any>
   {
@@ -78,13 +67,5 @@ export class ContactService {
     
     return this.httpClient.delete(`http://localhost:5001/api/Contact/DeleteContact/`+contactId);
   }
-
-
-  
-
-
-
-
-
 
 }

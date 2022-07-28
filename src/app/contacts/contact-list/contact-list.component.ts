@@ -45,15 +45,16 @@ export class ContactListComponent implements OnInit {
       data=>
       {
         this.listGet.data = data;
+        // this.getAllContacts();
         
       }
     )
   }
   
-  // onSearchClear() {
-  //   this.searchKey = " ";
-  //  this.applyFilter();
-  // }
+  onSearchClear() {
+    this.searchKey = " ";
+   //this.applyFilter();
+  }
 
   // applyFilter() {
   //   this.listGet.filter = this.searchKey.trim().toLowerCase();
@@ -76,10 +77,10 @@ export class ContactListComponent implements OnInit {
     dialogConfig.disableClose=false;
     dialogConfig.autoFocus=true;
     dialogConfig.width="60%";
-   this.dialog.open(ContactComponent,dialogConfig)
+    this.dialog.open(ContactComponent,dialogConfig)
   }
 
-//edit not working
+//edit working
   onEdit(row:any)
   {    
     const dialogConfig = new MatDialogConfig();
@@ -110,5 +111,35 @@ export class ContactListComponent implements OnInit {
   };
   //test
  
+
+  // ngOnDestroy() {
+  //   if (this.contactService.firstName) {
+  //     this.firstName.unsubscribe();
+  //   }
+  //   if (this.docSub) {
+  //     this.docSub.unsubscribe();
+  //   }
+  //   if (this.empInfoSub) {
+  //     this.empInfoSub.unsubscribe();
+  //   }
+  //   if (this.empListSub) {
+  //     this.empListSub.unsubscribe();
+  //   }
+  //   if (this.divSub) {
+  //     this.divSub.unsubscribe();
+  //   }
+  //   if (this.deptSub) {
+  //     this.deptSub.unsubscribe();
+  //   }
+  //   if (this.branchSub) {
+  //     this.branchSub.unsubscribe();
+  //   }
+  //   if (this.desigSub) {
+  //     this.desigSub.unsubscribe();
+  //   }
+  //   if (this.compSub) {
+  //     this.compSub.unsubscribe();
+  //   }
+  // }
   
 }

@@ -1,6 +1,6 @@
 export class Contact {
 
-    $contactID:any;
+    contactID:any;
     firstName:any;
     middleName:any;
     LastName:any;

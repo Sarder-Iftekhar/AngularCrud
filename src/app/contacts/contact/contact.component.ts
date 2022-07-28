@@ -12,7 +12,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class ContactComponent implements OnInit {
   listPost:any;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+  constructor(@Inject(MAT_DIALOG_DATA) public id: any,
               public contactService:ContactService,
               public notificationService:NotificationService,
               public router: Router,
@@ -20,13 +20,24 @@ export class ContactComponent implements OnInit {
   { }
 
   ngOnInit(): void {
-    this.getDataForEdit(this.data);
+    if (this.id){
+      this.getDataForEdit(this.id);
+    }
   }
-
+  //edit
   getDataForEdit(contactId:number) {
-    this.contactService.getContactByParameter(contactId).subscribe(res=>{
-      this.contactService.form.patchValue(res);   
-    });
+    if(contactId!=null)
+    {
+      this.contactService.getContactByParameter(contactId).subscribe(res=>{
+      this.contactService.form.patchValue(res); 
+      });
+    }
+     this.contactService.form.reset();
+    //this.contactService.initializeFormGroup();
+    // if(contactId==null)
+    // {
+    //  this.getUserFormData();
+    // }
   }
 
   onClear(){
@@ -34,13 +45,11 @@ export class ContactComponent implements OnInit {
     this.contactService.initializeFormGroup();
     this.notificationService.success(':: Submitted successfully');
   }
-
   getUserFormData()
   {
     //get form value from service
     let val = this.contactService.form.value;
     console.warn(val)
-    
     this.contactService.saveContact(val).subscribe(data=>{        
         //edit
         this.notificationService.success('Submitted successfully');   
@@ -51,6 +60,8 @@ export class ContactComponent implements OnInit {
    //this.onClose();
   } 
 
+
+ //test
 
 //on close function not working, see later
   onClose(val:boolean)
